@@ -27,19 +27,30 @@
 		})(i);
 	}
 	
+	//N秒之后 隐藏遮罩层
+	setTimeout(function(){
+		box.style.display = 'none';
+	}, 15*1000);
+	
 	//单项加载完执行的回调
 	function callback(type, idx){
 		sum += singleNum;
-		//留1%加载其他资源
-		sum = sum === 100 ? 99 : sum;
 		numbox.innerHTML = parseInt(sum, 10);
+		if(parseInt(sum, 10) >= 99){
+			numbox.innerHTML = 100;
+			setTimeout(function(){
+				box.style.display = 'none';
+			}, 50);
+		}
 	}
 	
 	//所有资源加载完隐藏遮罩层
-	bind(window, 'load', function(){
-		numbox.innerHTML = 100;
-		box.style.display = 'none';
-	});
+//	bind(window, 'load', function(){
+//		numbox.innerHTML = 100;
+//		setTimeout(function(){
+//			box.style.display = 'none';
+//		}, 50);
+//	});
 	
 	//绑定事件函数
 	function bind(obj, type, fn){
